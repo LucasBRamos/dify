@@ -1254,10 +1254,8 @@ services:
       - oracle
     restart: always
     volumes:
-      - source: oradata
-        type: volume
-        target: /opt/oracle/oradata
-      - ./startupscripts:/opt/oracle/scripts/startup
+      - ../../files/volumes/oracle/data:/opt/oracle/oradata
+      - ../../files/volumes/oracle/startupscripts:/opt/oracle/scripts/startup
     environment:
       ORACLE_PWD: ${ORACLE_PWD:-Dify123456}
       ORACLE_CHARACTERSET: ${ORACLE_CHARACTERSET:-AL32UTF8}
@@ -1427,7 +1425,7 @@ services:
     restart: always
     volumes:
       - ./elasticsearch/docker-entrypoint.sh:/docker-entrypoint-mount.sh
-      - dify_es01_data:/usr/share/elasticsearch/data
+      - ../../files/elasticsearch:/usr/share/elasticsearch/data
     environment:
       ELASTIC_PASSWORD: ${ELASTICSEARCH_PASSWORD:-elastic}
       VECTOR_STORE: ${VECTOR_STORE:-}
@@ -1503,4 +1501,3 @@ networks:
 
 volumes:
   oradata:
-  dify_es01_data:
