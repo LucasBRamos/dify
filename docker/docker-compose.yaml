@@ -1492,6 +1492,3 @@ networks:
   opensearch-net:
     driver: bridge
     internal: true
-
-volumes:
-  oradata:
