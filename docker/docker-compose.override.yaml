@@ -67,7 +67,7 @@ services:
     volumes:
       - ../../files/volumes/qdrant:/qdrant/storage
 
-  couchbase:
+  couchbase-server:
     volumes:
       - ../../files/volumes/couchbase/data:/opt/couchbase/var/lib/couchbase/data
 
