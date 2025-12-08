@@ -76,7 +76,7 @@ services:
       - ../../files/volumes/pgvector/data:/var/lib/postgresql/data
       - ./pgvector/docker-entrypoint.sh:/docker-entrypoint.sh
 
-  pgvecto_rs:
+  pgvecto-rs:
     volumes: !override
       - ../../files/volumes/pgvecto_rs/data:/var/lib/postgresql/data
 
