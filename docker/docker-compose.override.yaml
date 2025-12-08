@@ -3,36 +3,36 @@ x-shared-env: &shared-api-worker-env
 
 services:
   api:
-    volumes:
+    volumes: !override
       - ../../files/volumes/app/storage:/app/api/storage
 
   worker:
-    volumes:
+    volumes: !override
       - ../../files/volumes/app/storage:/app/api/storage
 
   db_postgres:
-    volumes:
+    volumes: !override
       - ../../files/volumes/db/data:/var/lib/postgresql/data
 
   db_mysql:
-    volumes:
+    volumes: !override
       - ${MYSQL_HOST_VOLUME:-../../files/volumes/mysql/data}:/var/lib/mysql
 
   redis:
-    volumes:
+    volumes: !override
       - ../../files/volumes/redis/data:/data
 
   sandbox:
-    volumes:
+    volumes: !override
       - ../../files/volumes/sandbox/dependencies:/dependencies
       - ../../files/volumes/sandbox/conf:/conf
 
   plugin-daemon:
-    volumes:
+    volumes: !override
       - ../../files/volumes/plugin_daemon:/app/storage
 
   certbot:
-    volumes:
+    volumes: !override
       - ../../files/volumes/certbot/conf:/etc/letsencrypt
       - ../../files/volumes/certbot/www:/var/www/html
       - ../../files/volumes/certbot/logs:/var/log/letsencrypt
@@ -41,7 +41,7 @@ services:
       - ./certbot/docker-entrypoint.sh:/docker-entrypoint.sh
 
   nginx:
-    volumes:
+    volumes: !override
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
       - ./nginx/ssl:/etc/ssl
@@ -50,84 +50,84 @@ services:
       - ../../files/volumes/certbot/www:/var/www/html
 
   weaviate:
-    volumes:
+    volumes: !override
       - ../../files/volumes/weaviate:/var/lib/weaviate
 
   oceanbase:
-    volumes:
+    volumes: !override
       - ../../files/volumes/oceanbase/data:/root/ob
       - ../../files/volumes/oceanbase/conf:/root/.obd/cluster
       - ../../files/volumes/oceanbase/init.d:/root/boot/init.d
 
   seekdb:
-    volumes:
+    volumes: !override
       - ../../files/volumes/seekdb:/var/lib/oceanbase
 
   qdrant:
-    volumes:
+    volumes: !override
       - ../../files/volumes/qdrant:/qdrant/storage
 
   couchbase:
-    volumes:
+    volumes: !override
       - ../../files/volumes/couchbase/data:/opt/couchbase/var/lib/couchbase/data
 
   pgvector:
-    volumes:
+    volumes: !override
       - ../../files/volumes/pgvector/data:/var/lib/postgresql/data
       - ./pgvector/docker-entrypoint.sh:/docker-entrypoint.sh
 
   pgvecto_rs:
-    volumes:
+    volumes: !override
       - ../../files/volumes/pgvecto_rs/data:/var/lib/postgresql/data
 
   chroma:
-    volumes:
+    volumes: !override
       - ../../files/volumes/chroma:/chroma/chroma
 
   oracle:
-    volumes:
+    volumes: !override
       - ../../files/volumes/oracle/data:/opt/oracle/oradata
       - ../../files/volumes/oracle/startupscripts:/opt/oracle/scripts/startup
 
   etcd:
-    volumes:
+    volumes: !override
       - ../../files/volumes/milvus/etcd:/etcd
 
   minio:
-    volumes:
+    volumes: !override
       - ../../files/volumes/milvus/minio:/minio_data
 
   milvus:
-    volumes:
+    volumes: !override
       - ../../files/volumes/milvus/milvus:/var/lib/milvus
 
   opensearch:
-    volumes:
+    volumes: !override
       - ../../files/volumes/opensearch/data:/usr/share/opensearch/data
 
   opensearch-dashboards:
-    volumes:
+    volumes: !override
       - ../../files/volumes/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
 
   opengauss:
-    volumes:
+    volumes: !override
       - ../../files/volumes/opengauss/data:/var/lib/opengauss/data
 
   myscale:
-    volumes:
+    volumes: !override
       - ../../files/volumes/myscale/data:/var/lib/clickhouse
       - ../../files/volumes/myscale/log:/var/log/clickhouse-server
       - ../../files/volumes/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
 
   matrixone:
-    volumes:
+    volumes: !override
       - ../../files/volumes/matrixone/data:/mo-data
 
   elasticsearch:
-    volumes:
+    volumes: !override
       - ./elasticsearch/docker-entrypoint.sh:/docker-entrypoint-mount.sh
       - ../../files/elasticsearch:/usr/share/elasticsearch/data
 
   unstructured:
-    volumes:
+    volumes: !override
       - ../../files/volumes/unstructured:/app/data
