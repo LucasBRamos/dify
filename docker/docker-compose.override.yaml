@@ -1,0 +1,133 @@
+x-shared-env: &shared-api-worker-env
+  MYSQL_HOST_VOLUME: ${MYSQL_HOST_VOLUME:-../../files/volumes/mysql/data}
+
+services:
+  api:
+    volumes:
+      - ../../files/volumes/app/storage:/app/api/storage
+
+  worker:
+    volumes:
+      - ../../files/volumes/app/storage:/app/api/storage
+
+  db_postgres:
+    volumes:
+      - ../../files/volumes/db/data:/var/lib/postgresql/data
+
+  db_mysql:
+    volumes:
+      - ${MYSQL_HOST_VOLUME:-../../files/volumes/mysql/data}:/var/lib/mysql
+
+  redis:
+    volumes:
+      - ../../files/volumes/redis/data:/data
+
+  sandbox:
+    volumes:
+      - ../../files/volumes/sandbox/dependencies:/dependencies
+      - ../../files/volumes/sandbox/conf:/conf
+
+  plugin-daemon:
+    volumes:
+      - ../../files/volumes/plugin_daemon:/app/storage
+
+  certbot:
+    volumes:
+      - ../../files/volumes/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes/certbot/www:/var/www/html
+      - ../../files/volumes/certbot/logs:/var/log/letsencrypt
+      - ../../files/volumes/certbot/conf/live:/etc/letsencrypt/live
+      - ./certbot/update-cert.template.txt:/update-cert.template.txt
+      - ./certbot/docker-entrypoint.sh:/docker-entrypoint.sh
+
+  nginx:
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
+      - ./nginx/ssl:/etc/ssl
+      - ../../files/volumes/certbot/conf/live:/etc/letsencrypt/live
+      - ../../files/volumes/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes/certbot/www:/var/www/html
+
+  weaviate:
+    volumes:
+      - ../../files/volumes/weaviate:/var/lib/weaviate
+
+  oceanbase:
+    volumes:
+      - ../../files/volumes/oceanbase/data:/root/ob
+      - ../../files/volumes/oceanbase/conf:/root/.obd/cluster
+      - ../../files/volumes/oceanbase/init.d:/root/boot/init.d
+
+  seekdb:
+    volumes:
+      - ../../files/volumes/seekdb:/var/lib/oceanbase
+
+  qdrant:
+    volumes:
+      - ../../files/volumes/qdrant:/qdrant/storage
+
+  couchbase:
+    volumes:
+      - ../../files/volumes/couchbase/data:/opt/couchbase/var/lib/couchbase/data
+
+  pgvector:
+    volumes:
+      - ../../files/volumes/pgvector/data:/var/lib/postgresql/data
+      - ./pgvector/docker-entrypoint.sh:/docker-entrypoint.sh
+
+  pgvecto_rs:
+    volumes:
+      - ../../files/volumes/pgvecto_rs/data:/var/lib/postgresql/data
+
+  chroma:
+    volumes:
+      - ../../files/volumes/chroma:/chroma/chroma
+
+  oracle:
+    volumes:
+      - ../../files/volumes/oracle/data:/opt/oracle/oradata
+      - ../../files/volumes/oracle/startupscripts:/opt/oracle/scripts/startup
+
+  etcd:
+    volumes:
+      - ../../files/volumes/milvus/etcd:/etcd
+
+  minio:
+    volumes:
+      - ../../files/volumes/milvus/minio:/minio_data
+
+  milvus:
+    volumes:
+      - ../../files/volumes/milvus/milvus:/var/lib/milvus
+
+  opensearch:
+    volumes:
+      - ../../files/volumes/opensearch/data:/usr/share/opensearch/data
+
+  opensearch-dashboards:
+    volumes:
+      - ../../files/volumes/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
+
+  opengauss:
+    volumes:
+      - ../../files/volumes/opengauss/data:/var/lib/opengauss/data
+
+  myscale:
+    volumes:
+      - ../../files/volumes/myscale/data:/var/lib/clickhouse
+      - ../../files/volumes/myscale/log:/var/log/clickhouse-server
+      - ../../files/volumes/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
+
+  matrixone:
+    volumes:
+      - ../../files/volumes/matrixone/data:/mo-data
+
+  elasticsearch:
+    volumes:
+      - ./elasticsearch/docker-entrypoint.sh:/docker-entrypoint-mount.sh
+      - ../../files/elasticsearch:/usr/share/elasticsearch/data
+
+  unstructured:
+    volumes:
+      - ../../files/volumes/unstructured:/app/data
