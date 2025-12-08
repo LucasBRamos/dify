@@ -27,7 +27,7 @@ services:
       - ../../files/volumes/sandbox/dependencies:/dependencies
       - ../../files/volumes/sandbox/conf:/conf
 
-  plugin-daemon:
+  plugin_daemon:
     volumes:
       - ../../files/volumes/plugin_daemon:/app/storage
 
