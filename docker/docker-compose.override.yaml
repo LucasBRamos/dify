@@ -37,14 +37,9 @@ services:
       - ../../files/volumes2/certbot/www:/var/www/html
       - ../../files/volumes2/certbot/logs:/var/log/letsencrypt
       - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
-      - ./certbot/update-cert.template.txt:/update-cert.template.txt
-      - ./certbot/docker-entrypoint.sh:/docker-entrypoint.sh
 
   nginx:
     volumes: !override
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
-      - ./nginx/ssl:/etc/ssl
       - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
       - ../../files/volumes2/certbot/conf:/etc/letsencrypt
       - ../../files/volumes2/certbot/www:/var/www/html
@@ -74,7 +69,6 @@ services:
   pgvector:
     volumes: !override
       - ../../files/volumes2/pgvector/data:/var/lib/postgresql/data
-      - ./pgvector/docker-entrypoint.sh:/docker-entrypoint.sh
 
   pgvecto-rs:
     volumes: !override
@@ -125,7 +119,6 @@ services:
 
   elasticsearch:
     volumes: !override
-      - ./elasticsearch/docker-entrypoint.sh:/docker-entrypoint-mount.sh
       - ../../files/elasticsearch:/usr/share/elasticsearch/data
 
   unstructured:
