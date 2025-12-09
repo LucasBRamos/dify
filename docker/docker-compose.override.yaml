@@ -1,116 +1,116 @@
 x-shared-env: &shared-api-worker-env
-  MYSQL_HOST_VOLUME: ${MYSQL_HOST_VOLUME:-../../files/volumes2/mysql/data}
+  MYSQL_HOST_VOLUME: ${MYSQL_HOST_VOLUME:-../../files/volumes3/mysql/data}
 
 services:
   api:
     volumes:
-      - ../../files/volumes2/app/storage:/app/api/storage
+      - ../../files/volumes3/app/storage:/app/api/storage
 
   worker:
     volumes:
-      - ../../files/volumes2/app/storage:/app/api/storage
+      - ../../files/volumes3/app/storage:/app/api/storage
 
   db_postgres:
     volumes:
-      - ../../files/volumes2/db/data:/var/lib/postgresql/data
+      - ../../files/volumes3/db/data:/var/lib/postgresql/data
 
   db_mysql:
     volumes:
-      - ${MYSQL_HOST_VOLUME:-../../files/volumes2/mysql/data}:/var/lib/mysql
+      - ${MYSQL_HOST_VOLUME:-../../files/volumes3/mysql/data}:/var/lib/mysql
 
   redis:
     volumes:
-      - ../../files/volumes2/redis/data:/data
+      - ../../files/volumes3/redis/data:/data
 
   plugin_daemon:
     volumes:
-      - ../../files/volumes2/plugin_daemon:/app/storage
+      - ../../files/volumes3/plugin_daemon:/app/storage
 
   certbot:
     volumes:
-      - ../../files/volumes2/certbot/conf:/etc/letsencrypt
-      - ../../files/volumes2/certbot/www:/var/www/html
-      - ../../files/volumes2/certbot/logs:/var/log/letsencrypt
-      - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
+      - ../../files/volumes3/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes3/certbot/www:/var/www/html
+      - ../../files/volumes3/certbot/logs:/var/log/letsencrypt
+      - ../../files/volumes3/certbot/conf/live:/etc/letsencrypt/live
 
   nginx:
     volumes:
-      - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
-      - ../../files/volumes2/certbot/conf:/etc/letsencrypt
-      - ../../files/volumes2/certbot/www:/var/www/html
+      - ../../files/volumes3/certbot/conf/live:/etc/letsencrypt/live
+      - ../../files/volumes3/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes3/certbot/www:/var/www/html
 
   weaviate:
     volumes:
-      - ../../files/volumes2/weaviate:/var/lib/weaviate
+      - ../../files/volumes3/weaviate:/var/lib/weaviate
 
   oceanbase:
     volumes:
-      - ../../files/volumes2/oceanbase/data:/root/ob
-      - ../../files/volumes2/oceanbase/conf:/root/.obd/cluster
-      - ../../files/volumes2/oceanbase/init.d:/root/boot/init.d
+      - ../../files/volumes3/oceanbase/data:/root/ob
+      - ../../files/volumes3/oceanbase/conf:/root/.obd/cluster
+      - ../../files/volumes3/oceanbase/init.d:/root/boot/init.d
 
   seekdb:
     volumes:
-      - ../../files/volumes2/seekdb:/var/lib/oceanbase
+      - ../../files/volumes3/seekdb:/var/lib/oceanbase
 
   qdrant:
     volumes:
-      - ../../files/volumes2/qdrant:/qdrant/storage
+      - ../../files/volumes3/qdrant:/qdrant/storage
 
   couchbase-server:
     volumes:
-      - ../../files/volumes2/couchbase/data:/opt/couchbase/var/lib/couchbase/data
+      - ../../files/volumes3/couchbase/data:/opt/couchbase/var/lib/couchbase/data
 
   pgvector:
     volumes:
-      - ../../files/volumes2/pgvector/data:/var/lib/postgresql/data
+      - ../../files/volumes3/pgvector/data:/var/lib/postgresql/data
 
   pgvecto-rs:
     volumes:
-      - ../../files/volumes2/pgvecto_rs/data:/var/lib/postgresql/data
+      - ../../files/volumes3/pgvecto_rs/data:/var/lib/postgresql/data
 
   chroma:
     volumes:
-      - ../../files/volumes2/chroma:/chroma/chroma
+      - ../../files/volumes3/chroma:/chroma/chroma
 
   oracle:
     volumes:
-      - ../../files/volumes2/oracle/data:/opt/oracle/oradata
-      - ../../files/volumes2/oracle/startupscripts:/opt/oracle/scripts/startup
+      - ../../files/volumes3/oracle/data:/opt/oracle/oradata
+      - ../../files/volumes3/oracle/startupscripts:/opt/oracle/scripts/startup
 
   etcd:
     volumes:
-      - ../../files/volumes2/milvus/etcd:/etcd
+      - ../../files/volumes3/milvus/etcd:/etcd
 
   minio:
     volumes:
-      - ../../files/volumes2/milvus/minio:/minio_data
+      - ../../files/volumes3/milvus/minio:/minio_data
 
   milvus-standalone:
     volumes:
-      - ../../files/volumes2/milvus/milvus:/var/lib/milvus
+      - ../../files/volumes3/milvus/milvus:/var/lib/milvus
 
   opensearch:
     volumes:
-      - ../../files/volumes2/opensearch/data:/usr/share/opensearch/data
+      - ../../files/volumes3/opensearch/data:/usr/share/opensearch/data
 
   opensearch-dashboards:
     volumes:
-      - ../../files/volumes2/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
+      - ../../files/volumes3/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
 
   opengauss:
     volumes:
-      - ../../files/volumes2/opengauss/data:/var/lib/opengauss/data
+      - ../../files/volumes3/opengauss/data:/var/lib/opengauss/data
 
   myscale:
     volumes:
-      - ../../files/volumes2/myscale/data:/var/lib/clickhouse
-      - ../../files/volumes2/myscale/log:/var/log/clickhouse-server
-      - ../../files/volumes2/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
+      - ../../files/volumes3/myscale/data:/var/lib/clickhouse
+      - ../../files/volumes3/myscale/log:/var/log/clickhouse-server
+      - ../../files/volumes3/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
 
   matrixone:
     volumes:
-      - ../../files/volumes2/matrixone/data:/mo-data
+      - ../../files/volumes3/matrixone/data:/mo-data
 
   elasticsearch:
     volumes:
@@ -118,4 +118,4 @@ services:
 
   unstructured:
     volumes:
-      - ../../files/volumes2/unstructured:/app/data
+      - ../../files/volumes3/unstructured:/app/data
