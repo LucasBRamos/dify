@@ -22,11 +22,6 @@ services:
     volumes:
       - ../../files/volumes2/redis/data:/data
 
-  sandbox:
-    volumes:
-      - ../../files/volumes2/sandbox/dependencies:/dependencies
-      - ../../files/volumes2/sandbox/conf:/conf
-
   plugin_daemon:
     volumes:
       - ../../files/volumes2/plugin_daemon:/app/storage
