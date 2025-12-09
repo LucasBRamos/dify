@@ -1,42 +1,42 @@
 x-shared-env: &shared-api-worker-env
-  MYSQL_HOST_VOLUME: ${MYSQL_HOST_VOLUME:-../../files/volumes/mysql/data}
+  MYSQL_HOST_VOLUME: ${MYSQL_HOST_VOLUME:-../../files/volumes2/mysql/data}
 
 services:
   api:
     volumes: !override
-      - ../../files/volumes/app/storage:/app/api/storage
+      - ../../files/volumes2/app/storage:/app/api/storage
 
   worker:
     volumes: !override
-      - ../../files/volumes/app/storage:/app/api/storage
+      - ../../files/volumes2/app/storage:/app/api/storage
 
   db_postgres:
     volumes: !override
-      - ../../files/volumes/db/data:/var/lib/postgresql/data
+      - ../../files/volumes2/db/data:/var/lib/postgresql/data
 
   db_mysql:
     volumes: !override
-      - ${MYSQL_HOST_VOLUME:-../../files/volumes/mysql/data}:/var/lib/mysql
+      - ${MYSQL_HOST_VOLUME:-../../files/volumes2/mysql/data}:/var/lib/mysql
 
   redis:
     volumes: !override
-      - ../../files/volumes/redis/data:/data
+      - ../../files/volumes2/redis/data:/data
 
   sandbox:
     volumes: !override
-      - ../../files/volumes/sandbox/dependencies:/dependencies
-      - ../../files/volumes/sandbox/conf:/conf
+      - ../../files/volumes2/sandbox/dependencies:/dependencies
+      - ../../files/volumes2/sandbox/conf:/conf
 
   plugin_daemon:
     volumes: !override
-      - ../../files/volumes/plugin_daemon:/app/storage
+      - ../../files/volumes2/plugin_daemon:/app/storage
 
   certbot:
     volumes: !override
-      - ../../files/volumes/certbot/conf:/etc/letsencrypt
-      - ../../files/volumes/certbot/www:/var/www/html
-      - ../../files/volumes/certbot/logs:/var/log/letsencrypt
-      - ../../files/volumes/certbot/conf/live:/etc/letsencrypt/live
+      - ../../files/volumes2/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes2/certbot/www:/var/www/html
+      - ../../files/volumes2/certbot/logs:/var/log/letsencrypt
+      - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
       - ./certbot/update-cert.template.txt:/update-cert.template.txt
       - ./certbot/docker-entrypoint.sh:/docker-entrypoint.sh
 
@@ -45,83 +45,83 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/docker-entrypoint.sh:/docker-entrypoint-mount.sh
       - ./nginx/ssl:/etc/ssl
-      - ../../files/volumes/certbot/conf/live:/etc/letsencrypt/live
-      - ../../files/volumes/certbot/conf:/etc/letsencrypt
-      - ../../files/volumes/certbot/www:/var/www/html
+      - ../../files/volumes2/certbot/conf/live:/etc/letsencrypt/live
+      - ../../files/volumes2/certbot/conf:/etc/letsencrypt
+      - ../../files/volumes2/certbot/www:/var/www/html
 
   weaviate:
     volumes: !override
-      - ../../files/volumes/weaviate:/var/lib/weaviate
+      - ../../files/volumes2/weaviate:/var/lib/weaviate
 
   oceanbase:
     volumes: !override
-      - ../../files/volumes/oceanbase/data:/root/ob
-      - ../../files/volumes/oceanbase/conf:/root/.obd/cluster
-      - ../../files/volumes/oceanbase/init.d:/root/boot/init.d
+      - ../../files/volumes2/oceanbase/data:/root/ob
+      - ../../files/volumes2/oceanbase/conf:/root/.obd/cluster
+      - ../../files/volumes2/oceanbase/init.d:/root/boot/init.d
 
   seekdb:
     volumes: !override
-      - ../../files/volumes/seekdb:/var/lib/oceanbase
+      - ../../files/volumes2/seekdb:/var/lib/oceanbase
 
   qdrant:
     volumes: !override
-      - ../../files/volumes/qdrant:/qdrant/storage
+      - ../../files/volumes2/qdrant:/qdrant/storage
 
   couchbase-server:
     volumes: !override
-      - ../../files/volumes/couchbase/data:/opt/couchbase/var/lib/couchbase/data
+      - ../../files/volumes2/couchbase/data:/opt/couchbase/var/lib/couchbase/data
 
   pgvector:
     volumes: !override
-      - ../../files/volumes/pgvector/data:/var/lib/postgresql/data
+      - ../../files/volumes2/pgvector/data:/var/lib/postgresql/data
       - ./pgvector/docker-entrypoint.sh:/docker-entrypoint.sh
 
   pgvecto-rs:
     volumes: !override
-      - ../../files/volumes/pgvecto_rs/data:/var/lib/postgresql/data
+      - ../../files/volumes2/pgvecto_rs/data:/var/lib/postgresql/data
 
   chroma:
     volumes: !override
-      - ../../files/volumes/chroma:/chroma/chroma
+      - ../../files/volumes2/chroma:/chroma/chroma
 
   oracle:
     volumes: !override
-      - ../../files/volumes/oracle/data:/opt/oracle/oradata
-      - ../../files/volumes/oracle/startupscripts:/opt/oracle/scripts/startup
+      - ../../files/volumes2/oracle/data:/opt/oracle/oradata
+      - ../../files/volumes2/oracle/startupscripts:/opt/oracle/scripts/startup
 
   etcd:
     volumes: !override
-      - ../../files/volumes/milvus/etcd:/etcd
+      - ../../files/volumes2/milvus/etcd:/etcd
 
   minio:
     volumes: !override
-      - ../../files/volumes/milvus/minio:/minio_data
+      - ../../files/volumes2/milvus/minio:/minio_data
 
   milvus-standalone:
     volumes: !override
-      - ../../files/volumes/milvus/milvus:/var/lib/milvus
+      - ../../files/volumes2/milvus/milvus:/var/lib/milvus
 
   opensearch:
     volumes: !override
-      - ../../files/volumes/opensearch/data:/usr/share/opensearch/data
+      - ../../files/volumes2/opensearch/data:/usr/share/opensearch/data
 
   opensearch-dashboards:
     volumes: !override
-      - ../../files/volumes/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
+      - ../../files/volumes2/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
 
   opengauss:
     volumes: !override
-      - ../../files/volumes/opengauss/data:/var/lib/opengauss/data
+      - ../../files/volumes2/opengauss/data:/var/lib/opengauss/data
 
   myscale:
     volumes: !override
-      - ../../files/volumes/myscale/data:/var/lib/clickhouse
-      - ../../files/volumes/myscale/log:/var/log/clickhouse-server
-      - ../../files/volumes/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
+      - ../../files/volumes2/myscale/data:/var/lib/clickhouse
+      - ../../files/volumes2/myscale/log:/var/log/clickhouse-server
+      - ../../files/volumes2/myscale/config/users.d/custom_users_config.xml:/etc/clickhouse-server/users.d/custom_users_config.xml
 
   matrixone:
     volumes: !override
-      - ../../files/volumes/matrixone/data:/mo-data
+      - ../../files/volumes2/matrixone/data:/mo-data
 
   elasticsearch:
     volumes: !override
@@ -130,4 +130,4 @@ services:
 
   unstructured:
     volumes: !override
-      - ../../files/volumes/unstructured:/app/data
+      - ../../files/volumes2/unstructured:/app/data
