@@ -74,7 +74,7 @@ services:
       - ../../files/volumes/chroma:/chroma/chroma
 
   oracle:
-    volumes:
+    volumes: !override
       - ../../files/volumes/oracle/data:/opt/oracle/oradata
       - ../../files/volumes/oracle/startupscripts:/opt/oracle/scripts/startup
 
