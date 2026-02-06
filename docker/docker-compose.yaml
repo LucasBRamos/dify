@@ -1147,12 +1147,18 @@ services:
   ssrf_proxy:
     image: ubuntu/squid:latest
     restart: always
-    volumes:
-      - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
-      - ./ssrf_proxy/docker-entrypoint.sh:/docker-entrypoint.sh
-    entrypoint: /docker-entrypoint.sh
+    configs:
+      - source: squid_template
+        target: /etc/squid/squid.conf.template
+      - source: entrypoint_script
+        target: /entrypoint.sh
+    entrypoint:
+      [
+        "sh",
+        "-c",
+        "chmod +x /entrypoint.sh && /entrypoint.sh"
+      ]
     environment:
-      # pls clearly modify the squid env vars to fit your network environment.
       HTTP_PORT: ${SSRF_HTTP_PORT:-3128}
       COREDUMP_DIR: ${SSRF_COREDUMP_DIR:-/var/spool/squid}
       REVERSE_PROXY_PORT: ${SSRF_REVERSE_PROXY_PORT:-8194}
@@ -1161,6 +1167,8 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+    deploy:
+      replicas: 1
 
   # Certbot service
   # use `docker-compose --profile certbot up` to start the certbot service.
@@ -1869,3 +1877,9 @@ networks:
   opensearch-net:
     driver: bridge
     internal: true
+
+configs:
+  squid_template:
+    file: ./ssrf_proxy/squid.conf.template
+  entrypoint_script:
+    file: ./ssrf_proxy/docker-entrypoint.sh
