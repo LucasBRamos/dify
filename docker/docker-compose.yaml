@@ -1152,12 +1152,7 @@ services:
         target: /etc/squid/squid.conf.template
       - source: entrypoint_script
         target: /entrypoint.sh
-    entrypoint:
-      [
-        "sh",
-        "-c",
-        "cp /entrypoint.sh /tmp/entrypoint.sh && chmod +x /tmp/entrypoint.sh && /tmp/entrypoint.sh"
-      ]
+    entrypoint: [ "bash", "/entrypoint.sh" ]
     environment:
       HTTP_PORT: ${SSRF_HTTP_PORT:-3128}
       COREDUMP_DIR: ${SSRF_COREDUMP_DIR:-/var/spool/squid}
