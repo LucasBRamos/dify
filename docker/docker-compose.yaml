@@ -1140,6 +1140,8 @@ services:
       seekdb:
         condition: service_healthy
         required: false
+    networks:
+      - default
 
   # ssrf_proxy server
   # for more information, please refer to
