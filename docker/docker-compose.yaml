@@ -739,6 +739,36 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dify-api-http.rule: "Host(`${DIFY_API_DOMAIN:-api.dify.local}`) || PathPrefix(`/api`, `/v1`)"
+      traefik.http.routers.dify-api-http.entrypoints: "web"
+      traefik.http.routers.dify-api-http.middlewares: "https-redirect"
+      traefik.http.routers.dify-api.rule: "Host(`${DIFY_API_DOMAIN:-api.dify.local}`) || PathPrefix(`/api`, `/v1`)"
+      traefik.http.routers.dify-api.entrypoints: "websecure"
+      traefik.http.routers.dify-api.service: "dify-api-service"
+      traefik.http.routers.dify-api.middlewares: "security-headers,hsts"
+      traefik.http.routers.dify-api.tls: "true"
+      traefik.http.routers.dify-api.tls.certresolver: "letsencrypt"
+      traefik.http.routers.dify-api.tls.domains[0].main: "${DIFY_API_DOMAIN:-api.dify.local}"
+      traefik.http.services.dify-api-service.loadbalancer.server.port: "5001"
+      traefik.http.services.dify-api-service.loadbalancer.server.scheme: "http"
+      traefik.http.services.dify-api-service.loadbalancer.passhostheader: "true"
+      traefik.http.middlewares.https-redirect.redirectscheme.scheme: "https"
+      traefik.http.middlewares.https-redirect.redirectscheme.permanent: "true"
+      traefik.http.middlewares.security-headers.headers.isdevelopment: "false"
+      traefik.http.middlewares.security-headers.headers.sslredirect: "true"
+      traefik.http.middlewares.security-headers.headers.sslhost: "${DIFY_API_DOMAIN:-api.dify.local}"
+      traefik.http.middlewares.security-headers.headers.sslforcehost: "true"
+      traefik.http.middlewares.security-headers.headers.contentTypeNosniff: "true"
+      traefik.http.middlewares.security-headers.headers.browserxssfilter: "true"
+      traefik.http.middlewares.security-headers.headers.referrerpolicy: "strict-origin-when-cross-origin"
+      traefik.http.middlewares.security-headers.headers.permissionspolicy: "geolocation=(), microphone=(), camera=()"
+      traefik.http.middlewares.security-headers.headers.customrequestheaders.X-Forwarded-Proto: "https"
+      traefik.http.middlewares.hsts.headers.sslhost: "${DIFY_API_DOMAIN:-api.dify.local}"
+      traefik.http.middlewares.hsts.headers.stsincludesubdomains: "true"
+      traefik.http.middlewares.hsts.headers.stspreload: "true"
+      traefik.http.middlewares.hsts.headers.stsmaxage: "63072000"
 
   # worker service
   # The Celery worker for processing all queues (dataset, workflow, mail, etc.)
@@ -838,6 +868,37 @@ services:
       ENABLE_WEBSITE_JINAREADER: ${ENABLE_WEBSITE_JINAREADER:-true}
       ENABLE_WEBSITE_FIRECRAWL: ${ENABLE_WEBSITE_FIRECRAWL:-true}
       ENABLE_WEBSITE_WATERCRAWL: ${ENABLE_WEBSITE_WATERCRAWL:-true}
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dify-web-http.rule: "Host(`${DIFY_WEB_DOMAIN:-dify.local}`)"
+      traefik.http.routers.dify-web-http.entrypoints: "web"
+      traefik.http.routers.dify-web-http.middlewares: "https-redirect"
+      traefik.http.routers.dify-web.rule: "Host(`${DIFY_WEB_DOMAIN:-dify.local}`)"
+      traefik.http.routers.dify-web.entrypoints: "websecure"
+      traefik.http.routers.dify-web.service: "dify-web-service"
+      traefik.http.routers.dify-web.middlewares: "security-headers,hsts,csp"
+      traefik.http.routers.dify-web.tls: "true"
+      traefik.http.routers.dify-web.tls.certresolver: "letsencrypt"
+      traefik.http.routers.dify-web.tls.domains[0].main: "${DIFY_WEB_DOMAIN:-dify.local}"
+      traefik.http.services.dify-web-service.loadbalancer.server.port: "3000"
+      traefik.http.services.dify-web-service.loadbalancer.server.scheme: "http"
+      traefik.http.services.dify-web-service.loadbalancer.passhostheader: "true"
+      traefik.http.middlewares.https-redirect.redirectscheme.scheme: "https"
+      traefik.http.middlewares.https-redirect.redirectscheme.permanent: "true"
+      traefik.http.middlewares.security-headers.headers.isdevelopment: "false"
+      traefik.http.middlewares.security-headers.headers.sslredirect: "true"
+      traefik.http.middlewares.security-headers.headers.sslhost: "${DIFY_WEB_DOMAIN:-dify.local}"
+      traefik.http.middlewares.security-headers.headers.sslforcehost: "true"
+      traefik.http.middlewares.security-headers.headers.contentTypeNosniff: "true"
+      traefik.http.middlewares.security-headers.headers.browserxssfilter: "true"
+      traefik.http.middlewares.security-headers.headers.referrerpolicy: "strict-origin-when-cross-origin"
+      traefik.http.middlewares.security-headers.headers.permissionspolicy: "geolocation=(), microphone=(), camera=()"
+      traefik.http.middlewares.security-headers.headers.customrequestheaders.X-Forwarded-Proto: "https"
+      traefik.http.middlewares.hsts.headers.sslhost: "${DIFY_WEB_DOMAIN:-dify.local}"
+      traefik.http.middlewares.hsts.headers.stsincludesubdomains: "true"
+      traefik.http.middlewares.hsts.headers.stspreload: "true"
+      traefik.http.middlewares.hsts.headers.stsmaxage: "63072000"
+      traefik.http.middlewares.csp.headers.contentsecuritypolicy: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.cloudflare.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
 
   # The PostgreSQL database.
   db_postgres:
