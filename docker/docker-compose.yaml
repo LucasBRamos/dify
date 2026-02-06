@@ -949,6 +949,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 60
+    networks:
+      - default
 
   # The mysql database.
   db_mysql:
@@ -990,6 +992,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - default
 
   # The redis cache.
   redis:
@@ -1020,6 +1024,8 @@ services:
           "CMD-SHELL",
           "redis-cli -a ${REDIS_PASSWORD:-difyai123456} ping | grep -q PONG",
         ]
+    networks:
+      - default
 
   # The DifySandbox
   sandbox:
