@@ -1156,7 +1156,7 @@ services:
       [
         "sh",
         "-c",
-        "chmod +x /entrypoint.sh && /entrypoint.sh"
+        "cp /entrypoint.sh /tmp/entrypoint.sh && chmod +x /tmp/entrypoint.sh && /tmp/entrypoint.sh"
       ]
     environment:
       HTTP_PORT: ${SSRF_HTTP_PORT:-3128}
